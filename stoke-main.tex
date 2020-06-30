@@ -37,8 +37,8 @@
 %\renewcommand{\thempfootnote}{\arabic{mpfootnote}}
 
 \newcommand{\dcc}{LIGO-P1700428}
-\newcommand{\cm}[1]{\textbf{\textcolor{red}{CM: #1}}}
-\newcommand{\MC}[1]{\textcolor{red}{MC: #1}}
+%\newcommand{\cm}[1]{\textbf{\textcolor{red}{CM: #1}}}
+\newcommand{\MC}[1]{\textcolor{blue}{MC: #1}}
 
 \def\ra{\ensuremath\rightarrow}
 
@@ -214,19 +214,32 @@ the details of the simulations are given. The results and a discussion are prese
 \section{The Stokes parameters}\label{sec:stokes}
 The Stokes parameters \cite{seto2007measuring} are a set of physical values that can be used to describe the polarisation status of \acp{GW}. 
 The mathematical definition of the Stokes parameters is given by,
+%\begin{align}\label{eq:stokesp}
+%\begin{pmatrix}
+% \langle h_R(f, \hat{n}) h_R(f', \hat{n}')^{*}\rangle & \langle h_L(f, \hat{n}) h_R(f', \hat{n}')^{*}\rangle\\ \nonumber
+%\langle h_R(f, \hat{n}) h_L(f', \hat{n}')^{*}\rangle & \langle h_L(f, \hat{n}) h_L(f', \hat{n}')^{*}\rangle
+%\end{pmatrix}
+%\\
+%= \frac{1}{4\pi}\delta_{D}^2(\hat{n} - \hat{n}')\delta_{D}^2(f - f')\nonumber \\ 
+%\begin{pmatrix}
+% I(f, f', \hat{n}, \hat{n}') + V(f, f', \hat{n}, \hat{n}') & Q(f, f', \hat{n}, \hat{n}') - iU(f, f', \hat{n}, \hat{n}')\\
+% Q(f, f', \hat{n}, \hat{n}') + iU(f, f', \hat{n}, \hat{n}') & I(f, f',  \hat{n}, \hat{n}') - V(f, f', \hat{n}, \hat{n}')
+%\end{pmatrix},
+%\end{align}
 \begin{align}\label{eq:stokesp}
-\begin{pmatrix}
- \langle h_R(f, \hat{n}) h_R(f', \hat{n}')^{*}\rangle & \langle h_L(f, \hat{n}) h_R(f', \hat{n}')^{*}\rangle\\ \nonumber
-\langle h_R(f, \hat{n}) h_L(f', \hat{n}')^{*}\rangle & \langle h_L(f, \hat{n}) h_L(f', \hat{n}')^{*}\rangle
-\end{pmatrix}
-\\
-= \frac{1}{4\pi}\delta_{D}^2(\hat{n} - \hat{n}')\delta_{D}^2(f - f')\nonumber \\ 
-\begin{pmatrix}
- I(f, \hat{n}) + V(f, \hat{n}) & Q(f, \hat{n}) - iU(f, \hat{n})\\
- Q(f, \hat{n}) + iU(f, \hat{n}) & I(f, \hat{n}) - V(f, \hat{n})
-\end{pmatrix},
-\end{align}
-where $f$ is frequency and $\hat{n}$ the unit vector in the propagation direction.
+ \langle h_R(f, \hat{n}) h_R(f', \hat{n}')^{*}\rangle = \frac{1}{4\pi}\delta_{D}^2(\hat{n} - \hat{n}')\delta_{D}^2(f - f') \times \nonumber\\
+ (I(f, f', \hat{n}, \hat{n}') + V(f, f', \hat{n}, \hat{n}')); \nonumber\\
+ \nonumber\\ 
+ \langle h_L(f, \hat{n}) h_R(f', \hat{n}')^{*}\rangle = \frac{1}{4\pi}\delta_{D}^2(\hat{n} - \hat{n}')\delta_{D}^2(f - f') \times \nonumber\\
+ (Q(f, f', \hat{n}, \hat{n}') - iU(f, f', \hat{n}, \hat{n}')); \nonumber\\ 
+ \nonumber\\ 
+ \langle h_R(f, \hat{n}) h_L(f', \hat{n}')^{*}\rangle = \frac{1}{4\pi}\delta_{D}^2(\hat{n} - \hat{n}')\delta_{D}^2(f - f') \times \nonumber\\
+ Q(f, f', \hat{n}, \hat{n}') + iU(f, f', \hat{n}, \hat{n}')); \nonumber\\ 
+ \nonumber\\ 
+ \langle h_L(f, \hat{n}) h_L(f', \hat{n}')^{*}\rangle = \frac{1}{4\pi}\delta_{D}^2(\hat{n} - \hat{n}')\delta_{D}^2(f - f') \times \nonumber\\
+ I(f, f',  \hat{n}, \hat{n}') - V(f, f', \hat{n}, \hat{n}'));
+\end{align} 
+where $f$ is frequency, $\hat{n}$ the unit vector in the propagation direction, \MC{and $\langle \rangle$ represents the ensemble average}.
 In the above equation, $h_R$ and $h_L$ are  the right-handed and left-handed mode of \ac{GW}, as given by
 \begin{align}\label{eq:rhlh}
  h_R &\equiv \frac{(h_{+} - \text{i}h_{\times})}{\sqrt{2}},\nonumber \\
@@ -269,7 +282,7 @@ where the antenna pattern of the detectors is denoted by $\bold{F}_+$ and $\bold
 Since the $V$ mode describes the asymmetry of the right-handed and left-handed mode of a \ac{GW}, which are related to the two polarisations $h_{+}$ and $h_{\times}$
 by Eqs. \ref{eq:rhlh} and \ref{eq:stokesV},
 the first step is to recover $h_+$ and $h_\times$ from $\bold{d}$.
-This is achieved in the \ac{SCP} algorithm by using the following equation,
+This is achieved in the \ac{SCP} algorithm by using the following equation~\cite{di2018estimation},
 \begin{equation}\label{eq:reconstruction}
 \begin{cases} 
 h^{r}_+(t) = \frac{(\bold{F}_+\cdot \bold{d}(\bold{t}))(\lvert\bold{F}_{\times}\rvert^{2}) - 
@@ -287,7 +300,7 @@ The $V$ mode can then be computed in the time-frequency domain using Eq. \ref{eq
 
 However, for a random trigger, $\bold{V}_\text{o}$ computed in such a way will not be entirely free of noise.
 To determine the $V$ mode of the trigger, we use the following procedure:
-first, $N$ whitened time series of the same duration as the trigger $\bold{d}^{\text{n}}_{k}$, adjacent to the time of the event as estimated by \ac{CWB}, are taken.
+first, $N$ whitened time series, $\bold{d}^{\text{n}}_{k}$, of the same duration as the trigger, adjacent to the time of the event as estimated by \ac{CWB}, are taken.
 The superscript $\text{n}$ indicates that these time series contain only noise, and the subscript $k$ ranges from $1$ to $N$.
 The value $N$ is an arbitrary number chosen before the calculation.
 We then compute the $V$ mode for each of $\bold{d}^{\text{n}}_{k}$ by substituting $\bold{d}^{\text{n}}_{k}$ for $\bold{d}$ in Eq. \ref{eq:reconstruction}, 
@@ -296,7 +309,7 @@ and the arrival times.
 The $V$ modes obtained are denoted by $\bold{V}_{k}^{\text{n}}$.
 As $\bold{V}_{k}^{\text{n}}$ is computed in the time-frequency domain, each $\bold{V}_{k}^{\text{n}}$ contains $m$ time-frequency pixels, 
 where $m$ is a number depending on the number of overlap and Fast Fourier transform window.
-This means in total there will be $N\times m$ time frequency pixels.
+This means in total there will be $N\times m$ time-frequency pixels.
 
 The final step is then to rank the  $N\times m$ pixels based on their absolute values. 
 The value larger than a pre-selected fraction $\text{F}_o$ (e.g., $0.99$) of pixels will be selected as a threshold $p_\text{thr}$.
@@ -318,6 +331,11 @@ The Bayes factor is a ratio of the posteriors of two competing models or hypothe
 where $p(\text{H}_0|\bold{d})$ 
 is the posterior of the null hypothesis $\text{H}_0$ given $\bold{d}$, 
 and $p(\text{H}_1|\bold{d})$ the posterior of the alternative hypothesis given $\bold{d}$.
+\MC{The Bayes factor measures how much a hypothesis or a model is favoured by the data against another competing hypothesis or model.
+If the value of $B_{\text{H}_1 / \text{H}_0}$ is larger than $1$, it means $\text{H}_1$ is favoured by the data, 
+or the data is in favour of $\text{H}_0$ if the value is less than $1$. 
+While Bayes factors is similar to the signal-to-noise ratio of a signal in the sense that they can both be used to estimate the significance of the presence of a signal,
+they are not equal.}
 Since our purpose is to determine the presence or absence of the $V$ mode of a trigger,
 $\text{H}_1$ is the hypothesis that a $V$ mode signature is detected, 
 and $\text{H}_0$ no $V$ mode signature is detected.  
@@ -355,8 +373,8 @@ elliptical polarisation ($\iota = 70^{\circ}$) and linear polarisation ($\iota =
 For a fair comparison between these three cases, the sky locations of the sources are chosen to be the same at (longitude, latitude) = $-90^\circ$ and $30^\circ$ and 
 the values of $h$ are chosen  such that each sine-Gaussian wave has the same value of $h_\text{rss}$ (i.e. $8.3\times10^{-23}$).
 The network consists of \ac{aLIGO} Hanford, \ac{aLIGO} Livingston, \ac{AdVirgo} and KAGRA. 
-The noise is Gaussian noise generated using the power spectrum densities at their respective design sensitivity.
-For the settings in the \ac{SCP} algorithm, we choose $N$ to be 100 and $\text{F}_o$ to be $99\%$. 
+The noise is Gaussian noise generated using the power spectrum densities at their respective design sensitivity~\cite{abbott2018prospects, acernese2014advanced, akutsu2018kagra}.
+For the settings in the \ac{SCP} algorithm, we choose $N$ to be 100 and $\text{F}_o$ to be $0.99$. 
 The true values of arrival times and the antenna pattern are used.
 
 The results are shown in Fig. \ref{fig:simpleV}.
@@ -397,7 +415,7 @@ The results are shown in Fig. \ref{fig:simpleV}.
 From $\iota = 0$ to  $90^{\circ}$, a decrease in the magnitude of the $V$ mode can be seen.
 This indicates that the magnitude of the $V$ mode captures the extent to which the signal is circularly polarised.
 For the sine-Gaussian waves at $\iota=$ $0^{\circ}, 70^{\circ}, 90^{\circ}$, the $\log {B_{\text{H}_1 / \text{H}_0}}$ 
-are  $67.2$, $55.0$ and $0.4$ for respectively.  
+are  $67.2$, $55.0$ and $0.4$ respectively.  
 If we consider $\text{H}_1$ is preferred when $\log B_{\text{H}_1 / \text{H}_0}>= 8$, 
 then it can be seen that for the cases at $\iota=$ $0^{\circ}$ and  $70^{\circ}$, $\text{H}_1$ is preferred, 
 while for $\iota=90^{\circ}$, $\text{H}_0$ is preferred, which are as expected.
@@ -473,7 +491,8 @@ For the purpose of investigating the detectability of the $V$ mode for sources a
 we perform simulations at $3$ different distances, 
 i.e., $2$ kpc, $5$ kpc and $10$ kpc.
 For each distance, we generate $5\times 10^4$ sources distributed in the sky assuming a uniform distribution on right ascension and on the sine of declination.
-When computing the value of $\log {B_{\text{H}_1 / \text{H}_0}}$ for an event, we choose $N$ to be $2000$ and $f_o = 0.99$. 
+When computing the value of $\log {B_{\text{H}_1 / \text{H}_0}}$ for an event, we choose $N$ (\MC{the number of noise only whitened time series in the computation of the $V$ mode}) 
+to be $2000$ and $F_o$ (\MC{the threshold for selecting pixels in the time-frequency domain}) to be $0.99$. 
 For simplicity, we use simulated Gaussian noise generated using
 power spectrum densities of the detectors at their respective design sensitivities. 
 Since we are focused on \acp{GW} from \acp{CCSN}, 
@@ -525,7 +544,8 @@ In particular, for sources at $2$ kpc, the distribution of  $\log B_{\text{H}_1 
 is consistent with the pattern shown in Fig. \ref{fig:domon}. This is somewhat expected, 
 since the $V$ mode relies on the reconstruction of the two polarisations of \acp{GW}.
 However, it is noticeable that regions where the values are the highest in Fig. \ref{fig:domon} are not the highest in Fig. \ref{fig:2kpcskymap},
-(For example, one of the highest values in Fig. \ref{fig:domon} occurs at (longitude, latitude) = $(\sim 60^\circ, \sim 60^\circ)$, while the largest Bayes factor
+(For example, one of the highest values in Fig. \ref{fig:domon} occurs at (longitude, latitude) = $(\sim 60^\circ, \sim 60^\circ)$, 
+while the largest Bayes factor
 for sources at $2$ kpc happens at (longitude, latitude) = $(\sim -100^\circ, \sim 0^\circ)$. )
 That is because the amplitudes of the signal are first modulated by the antenna pattern of the detector networks.
 This means the distribution of $\log B_{\text{H}_1 / \text{H}_0}$ 
@@ -607,6 +627,15 @@ We argue that although the simulations presented in this paper is done using onl
 If fact, the results can be extrapolated to other waveforms by comparing the $V$ mode of other waveforms with the $V$ mode of the SFHx waveform shown in Fig. \ref{fig:simpleV2}
 and the values of $\log B_{\text{H}_1 / \text{H}_0}$ of their $V$ mode using the method laid out in section \ref{sec:al}.
 In addition, the method presented in this paper is not limited to the waveform used.
+
+\MC{As stated before, the \ac{SCP} algorithm will be called to compute the $V$ mode of a signal 
+only if the signal is detectable to \ac{CWB}. 
+This requirement has the advantage of increasing the confidence in the event of a detection.
+However, it is possible that such a requirement can potentially cause signals to be overlooked that may otherwise be detectable because
+the detectability of $V$ modes may not be completely correlated with the detectability of the signals using more traditional methods as shown in~\cite{hayama2018circular}.
+For future study, to circumvent this problem, 
+we plan to relax such a requirement by expanding the \ac{SCP} algorithm and employing only the $V$ mode as detection statistics.} 
+
 
 \section{Conclusion}\label{sec:conclusion}
 We have developed an algorithm referred to as the \ac{SCP} algorithm that works with the pipeline \ac{CWB}.
